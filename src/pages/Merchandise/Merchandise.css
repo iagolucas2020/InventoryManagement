@@ -14,3 +14,17 @@
   margin: 5px;
 }
 
+.container header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #32c787;
+  margin-bottom: 5px;
+  border-radius: 5px;
+}
+
+.container header h2 {
+  color: white;
+  margin: 5px;
+}
+
