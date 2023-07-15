@@ -38,7 +38,7 @@ function Merchandise() {
     const result = await remove(id);
     if (result.status === 200) {
       updateTabela(id);
-      AlertBasic('Excluir', 'Mercadoria excluída com sucesso.', 'success');
+      AlertBasic("Excluir", "Mercadoria excluída com sucesso.", "success");
     }
   };
 
@@ -52,14 +52,17 @@ function Merchandise() {
       <br />
       <header>
         <h2>Lista de Mercadorias</h2>
-        <button
-          className="btn btn-primary"
-          onClick={() => {
-            openModal();
-          }}
-        >
-          Novo
-        </button>
+        <div>
+        <button className="btn btn-dark">Download</button>
+          <button
+            className="btn btn-success"
+            onClick={() => {
+              openModal();
+            }}
+          >
+            Novo
+          </button>
+        </div>
       </header>
       <table className="table table-bordered table-striped table-hover">
         <thead>

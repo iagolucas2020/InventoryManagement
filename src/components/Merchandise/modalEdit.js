@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import { put } from "../../services/merchandise";
 import AlertBasic from "../Alert";
+import './Modal.css'
 
 function ModalEdit(props) {
 
@@ -61,7 +62,7 @@ function ModalEdit(props) {
 
   return (
     <Modal isOpen={props.visible}>
-      <ModalHeader> Editar Mercadorias </ModalHeader>
+      <ModalHeader className="modalHeader"> Editar Mercadorias </ModalHeader>
       <ModalBody>
         <div className="form-group">
           <label>Código:</label>
@@ -125,7 +126,7 @@ function ModalEdit(props) {
           <br />
         </div>
       </ModalBody>
-      <ModalFooter>
+      <ModalFooter className="modalFooter">
         <button
           className="btn btn-primary"
           onClick={() => {

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import { post } from "../../services/merchandise";
 import AlertBasic from "../Alert";
+import './Modal.css'
 
 function ModalAdd(props) {
   const [data, setData] = useState({
@@ -66,7 +67,7 @@ function ModalAdd(props) {
 
   return (
     <Modal isOpen={props.visible}>
-      <ModalHeader> Incluir Mercadorias </ModalHeader>
+      <ModalHeader className="modalHeader"> Incluir Mercadorias </ModalHeader>
       <ModalBody>
         <div className="form-group">
           <label>Nome:</label>
@@ -116,7 +117,7 @@ function ModalAdd(props) {
           <br />
         </div>
       </ModalBody>
-      <ModalFooter>
+      <ModalFooter className="modalFooter">
         <button
           className="btn btn-primary"
           onClick={() => {
