@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./Stock.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { get, remove } from "../../services/stock";
+import { get, getFilter, remove, getPdf } from "../../services/stock";
 import ModalAdd from "../../components/Stock/modalAdd";
 import ModalEdit from "../../components/Stock/modalEdit";
 import AlertBasic from "../../components/Alert";
@@ -10,6 +10,8 @@ import moment from "moment";
 function Stock() {
   const [data, setData] = useState([]);
   const [dataEdit, setDataEdit] = useState([]);
+  const [dataInicial, setDataInicial] = useState("");
+  const [dataFinal, setDataFinal] = useState("");
 
   const [visibleModal, setVisibleModal] = useState(false);
   const [visibleEditar, setVisibleEditar] = useState(false);
@@ -20,6 +22,7 @@ function Stock() {
 
   const getData = async () => {
     let result = await get();
+    console.log(result.data);
     if (result.status === 200) {
       setData(result.data);
     }
@@ -48,13 +51,53 @@ function Stock() {
     setData(dataUpdate);
   };
 
+  const filterDate = async () => {
+    if (dataInicial === "" || dataFinal === "") {
+      AlertBasic(
+        "Atenção",
+        "Preencher campo de Data Inicial e Final para aplicar o filtro.",
+        "error"
+      );
+      return;
+    }
+    const response = await getFilter(dataInicial, dataFinal);
+    setData(response.data);
+  };
+
+  const downloadPdf = async () => {
+    if (dataInicial === "" || dataFinal === "") {
+      AlertBasic(
+        "Atenção",
+        "Preencher campo de Data Inicial e Final para realizar o download.",
+        "error"
+      );
+      return;
+    }
+    await getPdf(dataInicial, dataFinal);
+  };
+
   return (
     <div className="container-sm container">
       <br />
       <header>
         <h2>Lista de Estoque</h2>
         <div>
-        <button className="btn btn-dark">Download</button>
+          <button
+            className="btn btn-dark"
+            onClick={() => {
+              downloadPdf();
+            }}
+          >
+            Download
+          </button>
+          <button
+            className="btn btn-warning"
+            onClick={() => {
+              filterDate();
+            }}
+          >
+            Filtrar
+          </button>
           <button
             className="btn btn-success"
             onClick={() => {
@@ -65,6 +108,29 @@ function Stock() {
           </button>
         </div>
       </header>
+      <div className="form-group">
+        <div className="row">
+          <div className="col-6">
+            <label>Data Inicial</label>
+            <input
+              className="form-control"
+              type="datetime-local"
+              value={dataInicial}
+              onChange={(e) => setDataInicial(e.target.value)}
+            />
+          </div>
+          <div className="col-6">
+            <label>Data Final</label>
+            <input
+              className="form-control"
+              type="datetime-local"
+              value={dataFinal}
+              onChange={(e) => setDataFinal(e.target.value)}
+            />
+          </div>
+        </div>
+      </div>
+      <br />
       <table className="table table-bordered table-striped table-hover">
         <thead>
           <tr>

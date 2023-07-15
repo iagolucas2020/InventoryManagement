@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import "./Merchandise.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { get, remove } from "../../services/merchandise";
+import { get, getPdf, remove } from "../../services/merchandise";
 import ModalAdd from "../../components/Merchandise/modalAdd";
 import ModalEdit from "../../components/Merchandise/modalEdit";
 import AlertBasic from "../../components/Alert";
+import axios from "axios";
 
 function Merchandise() {
   const [data, setData] = useState([]);
@@ -47,13 +48,24 @@ function Merchandise() {
     setData(dataUpdate);
   };
 
+  const downloadPdf = async () => {
+    await getPdf();
+  };
+
   return (
     <div className="container-sm container">
       <br />
       <header>
         <h2>Lista de Mercadorias</h2>
         <div>
-        <button className="btn btn-dark">Download</button>
+          <button
+            className="btn btn-dark"
+            onClick={() => {
+              downloadPdf();
+            }}
+          >
+            Download
+          </button>
           <button
             className="btn btn-success"
             onClick={() => {

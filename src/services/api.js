@@ -8,4 +8,4 @@ const api = axios.create({
   baseURL: linkApi.link,
 });
 
-export { api };
+export { api, linkApi };
