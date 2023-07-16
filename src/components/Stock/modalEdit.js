@@ -29,10 +29,13 @@ function ModalEdit(props) {
       return;
 
     var result = await put(id, obj);
+    console.log(result);
     if (result.status === 200) {
       props.func();
       props.funcUpdate();
       AlertBasic('Atualizar', 'Mercadoria atualizada com sucesso', 'success');
+    }else {
+      AlertBasic('Atualizar', 'Mercadoria atualizada com sucesso', 'error');
     }
 
   };

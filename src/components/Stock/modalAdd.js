@@ -36,11 +36,15 @@ function ModalAdd(props) {
     if (!checkInput(obj)) return;
 
     const result = await post(obj);
+    console.log(result);
+
     if (result.status === 201) {
       clear();
       props.func();
       props.funcUpdate();
       AlertBasic("Cadastro", "Estoque Cadastrada com sucesso", "success");
+    } else if (result.status === 200) {
+      AlertBasic("Atenção", result.data, "error");
     }
   };
 
