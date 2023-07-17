@@ -1,3 +1,9 @@
-.container h2{
-    color: brown;
+.container h3{
+    color: red;
 }
+
+/* .panel {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+} */

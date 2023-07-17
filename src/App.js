@@ -7,7 +7,9 @@ function App() {
   return (
     <>
       <Header />
-      <AppRoute />
+      <div className="panel">
+        <AppRoute />
+      </div>
       <Footer />
     </>
   );

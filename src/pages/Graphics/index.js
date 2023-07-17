@@ -5,12 +5,15 @@ import { get } from "../../services/merchandise";
 import { getMerchandisesId } from "../../services/stock";
 import moment from "moment/moment";
 import "moment/locale/pt-br";
+import "./Graphics.css";
+import AlertBasic from "../../components/Alert";
 
 function Graphics() {
   const [dataMerchandises, setDataMerchandises] = useState([]);
   const [months, setMonths] = useState([]);
   const [inn, setInn] = useState([]);
   const [out, setOut] = useState([]);
+  const [title, setTitle] = useState([]);
 
   useEffect(() => {
     const init = async () => {
@@ -25,12 +28,17 @@ function Graphics() {
   };
 
   const getDataStockByMerchandisesId = async (id) => {
-    const result = await getMerchandisesId(id);
-    builtArray(result.data);
+    var title = dataMerchandises.filter((x) => x.id === Number(id))[0].name;
+    setTitle(title);
+    if (id !== "0") {
+      const result = await getMerchandisesId(id);
+      builtArray(result.data);
+    } else {
+      AlertBasic("Atenção", "Selecione a mercadoria.", "error");
+    }
   };
 
   const builtArray = (array) => {
-
     let months = [];
     let ent = [];
     let sai = [];
@@ -52,10 +60,10 @@ function Graphics() {
         }
       }
     }
-    
+
     for (let i = 0; i < months.length; i++) {
-      ent.push(0);      
-      sai.push(0);      
+      ent.push(0);
+      sai.push(0);
     }
 
     for (let i = 0; i < months.length; i++) {
@@ -98,7 +106,7 @@ function Graphics() {
   data.unshift(arrIndice);
 
   const options = {
-    title: "Entrada x Saída",
+    title: title,
     curveType: "function",
     legend: { position: "bottom" },
     hAxis: { format: "currency" },
@@ -117,7 +125,9 @@ function Graphics() {
                 getDataStockByMerchandisesId(e.target.value);
               }}
             >
-              <option select>Selecione...</option>
+              <option value={0} select>
+                Selecione...
+              </option>
               {dataMerchandises.map((m) => (
                 <option value={m.id}>{m.name}</option>
               ))}
@@ -125,16 +135,19 @@ function Graphics() {
           </div>
         </div>
       </div>
-      {months.length > 0 ? (    <Chart
-        chartType="ColumnChart"
-        data={data}
-        width="100%"
-        height="400px"
-        options={options}
-        chartLanguage="pt-BR"
-        legendToggle
-      />) : (<h1>Dados não disponíveis desta mercadoria.</h1>)}
-
+      {months.length > 0 ? (
+        <Chart
+          chartType="ColumnChart"
+          data={data}
+          width="100%"
+          height="400px"
+          options={options}
+          chartLanguage="pt-BR"
+          legendToggle
+        />
+      ) : (
+        <h3>Esta mercadoria não possui lançamento de estoque.</h3>
+      )}
     </div>
   );
 }
