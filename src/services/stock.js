@@ -5,10 +5,13 @@ async function get() {
   return await api.get("/Stocks/stocks");
 }
 
-//GET FILTRO
+//GET BY MERCHANDISES ID
+async function getMerchandisesId(id) {
+  return await api.get("/Stocks/merchandises/" + id);
+}
+
+//GET FILTER
 async function getFilter(initial, final) {
-  console.log(initial);
-  console.log(final);
   const response = await api.get("/Stocks/filtro", {
     params: {
       initial: initial,
@@ -57,4 +60,4 @@ async function getPdf(initial, final) {
   });
 }
 
-export { get, getFilter, post, put, remove, getPdf };
+export { get, getFilter, post, put, remove, getPdf, getMerchandisesId };

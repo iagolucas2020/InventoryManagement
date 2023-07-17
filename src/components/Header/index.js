@@ -9,6 +9,7 @@ function Header() {
       <nav>
         <a href="/">Mercadorias</a>
         <a href="/Stock">Estoques</a>
+        <a href="/Graphics">Gráficos</a>
       </nav>
     </header>
   );
