@@ -6,7 +6,7 @@ import { getMerchandisesId } from "../../services/stock";
 import moment from "moment/moment";
 import "moment/locale/pt-br";
 import "./Graphics.css";
-import AlertBasic from "../../components/Alert";
+import { AlertBasic } from "../../components/Alert";
 
 function Graphics() {
   const [dataMerchandises, setDataMerchandises] = useState([]);
@@ -28,9 +28,9 @@ function Graphics() {
   };
 
   const getDataStockByMerchandisesId = async (id) => {
-    var title = dataMerchandises.filter((x) => x.id === Number(id))[0].name;
-    setTitle(title);
     if (id !== "0") {
+      var title = dataMerchandises.filter((x) => x.id === Number(id))[0].name;
+      setTitle(title);
       const result = await getMerchandisesId(id);
       builtArray(result.data);
     } else {

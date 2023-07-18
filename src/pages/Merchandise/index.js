@@ -4,8 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { get, getPdf, remove } from "../../services/merchandise";
 import ModalAdd from "../../components/Merchandise/modalAdd";
 import ModalEdit from "../../components/Merchandise/modalEdit";
-import AlertBasic from "../../components/Alert";
-import axios from "axios";
+import { AlertBasic, AlertConfirm } from "../../components/Alert";
 
 function Merchandise() {
   const [data, setData] = useState([]);
@@ -36,11 +35,14 @@ function Merchandise() {
   };
 
   const removeMc = async (id) => {
-    const result = await remove(id);
-    if (result.status === 200) {
-      updateTabela(id);
-      AlertBasic("Excluir", "Mercadoria excluída com sucesso.", "success");
-    }
+    const response = await AlertConfirm('Exclusão', 'Tem certeza que deseja excluir esta mercadoria, id: ' + id + ".", 'question')
+    if(response.isConfirmed){
+      const result = await remove(id);
+      if (result.status === 200) {
+        updateTabela(id);
+        AlertBasic("Exclusão", "Mercadoria excluída com sucesso.", "success");
+      }
+    };
   };
 
   const updateTabela = (id) => {

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import { post } from "../../services/merchandise";
-import AlertBasic from "../Alert";
+import { AlertBasic } from "../Alert";
 import './Modal.css'
 
 function ModalAdd(props) {

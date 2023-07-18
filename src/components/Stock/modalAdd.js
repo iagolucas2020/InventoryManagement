@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import { get } from "../../services/merchandise";
 import { post } from "../../services/stock";
-import AlertBasic from "../Alert";
+import { AlertBasic } from "../Alert";
 
 function ModalAdd(props) {
   const [data, setData] = useState({

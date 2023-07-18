@@ -4,8 +4,9 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { get, getFilter, remove, getPdf } from "../../services/stock";
 import ModalAdd from "../../components/Stock/modalAdd";
 import ModalEdit from "../../components/Stock/modalEdit";
-import AlertBasic from "../../components/Alert";
+import { AlertBasic, AlertConfirm } from "../../components/Alert";
 import moment from "moment";
+import Swal from "sweetalert2";
 
 function Stock() {
   const [data, setData] = useState([]);
@@ -22,7 +23,6 @@ function Stock() {
 
   const getData = async () => {
     let result = await get();
-    console.log(result.data);
     if (result.status === 200) {
       setData(result.data);
     }
@@ -39,10 +39,13 @@ function Stock() {
   };
 
   const removeSt = async (id) => {
-    const result = await remove(id);
-    if (result.status === 200) {
-      updateTabela(id);
-      AlertBasic("Excluir", "Mercadoria excluída com sucesso.", "success");
+    const response = await AlertConfirm('Exclusão', 'Tem certeza que deseja excluir este lançamento, id: ' + id + ".", 'question')
+    if(response.isConfirmed){
+      const result = await remove(id);
+      if (result.status === 200) {
+        updateTabela(id);
+        AlertBasic("Exclusão", "Estoque excluído com sucesso.", "success");
+      }
     }
   };
 
@@ -151,7 +154,15 @@ function Stock() {
               <td>{s.quantity}</td>
               <td>{moment(new Date(s.date)).format("DD/MM/YYYY HH:mm:ss")}</td>
               <td>{s.location}</td>
-              <td>{s.receipt === true ? "Entrada" : "Saída"}</td>
+              <td
+                className={
+                  s.receipt === true
+                    ? "bg-success text-white"
+                    : "bg-danger text-white"
+                }
+              >
+                {s.receipt === true ? "Entrada" : "Saída"}
+              </td>
               <td>
                 <button
                   className="btn btn-primary"
